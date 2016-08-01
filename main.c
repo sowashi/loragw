@@ -202,7 +202,7 @@ void writeRegister(byte addr, byte value)
     unselectreceiver();
 }
 
-void decrypt(uint8_t *payload, uint8_t *decryptmsg) {
+void decrypt(uint8_t *payload, char *decryptmsg) {
 
     uint8_t appPayloadStartIndex = 9;
 
@@ -473,11 +473,11 @@ void receivepacket() {
             memcpy((void *)(buff_up + buff_index), (void *)"\",\"data_plain\":\"", 16);
             buff_index += 16;
 
-            uint8_t decryptmsg[LORAMAC_PHY_MAXPAYLOAD];
+            char decryptmsg[LORAMAC_PHY_MAXPAYLOAD] = "";
             decrypt((uint8_t *)message, decryptmsg);
 
-            memcpy((void *)(buff_up + buff_index), decryptmsg, strlen((char *)decryptmsg));
-            buff_index += strlen((char *)decryptmsg);
+            memcpy((void *)(buff_up + buff_index), decryptmsg, strlen(decryptmsg));
+            buff_index += strlen(decryptmsg);
             memcpy((void *)(buff_up + buff_index), (void *)"\"", 1);
             ++buff_index;
 
